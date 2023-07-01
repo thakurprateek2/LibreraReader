@@ -102,6 +102,53 @@ cd Builder
 
 F-Droid build does also not need a **google-services.json**
 
+## Build on mac
+Before proceeding make sure you have android NDK set up
+Before proceeding check the file Builder/link_to_mupdf_x.x.x.sh. Check the if ndk-build commands are using the proper path where NDK is installed.
+If not modify this path to point to the correct path of NDK whihc can be something like 
+~~~
+/Users/<usename>/Library/Android/Sdk/ndk/<ndk-version-number>>/ndk-build
+~~~
+
+* Set ndk project path
+~~~
+ export NDK_PROJECT_PATH=<path_to_project_root>/Builder/mupdf-x.x.x/platform/librera
+~~~ 
+
+* Build mupdf
+~~~~
+cd Builder
+./link_to_mupdf_x.x.x.sh
+~~~~
+this will checkout mupdf repo and build it
+
+* build apk
+~~~
+./gradlew assembleFdroid
+~~~
+Please note: Above command must be run in project root folder
+
+* Install on device
+Adb command to install apk
+~~~
+ adb install Librera\ Librera-8.9.18-uni.apk 
+~~~
+Please make sure you escape the space as it can make the command format invalid.
+If you are unable to run adb in terminal you can find out the path on which adb exists. 
+It would be something like
+~~~
+/Users/<username>/Library/Android/sdk/platform-tools/
+~~~
+you can add the command temporarily set this on the PATH and this try to install apk again.
+~~~
+export PATH=/Users/<username>/Library/Android/sdk/platform-tools/:$PATH
+~~~
+
+
+### Below link might be helpful in case you face any build issues on mac
+https://stackoverflow.com/questions/46872922/broken-c-std-libraries-on-macos-high-sierra-10-13/47401866#47401866:~:text=102-,I%20had%20exactly,-the%20same%20problem
+
+
 ## Librera depends on:
 
 MuPDF - (AGPL License) https://mupdf.com/downloads/archive/
