@@ -128,7 +128,8 @@ this will checkout mupdf repo and build it
 ~~~
 Please note: Above command must be run in project root folder
 
-* Install on device
+* Install on device:
+
 Adb command to install apk
 ~~~
  adb install Librera\ Librera-8.9.18-uni.apk 
