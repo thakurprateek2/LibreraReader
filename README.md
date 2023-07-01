@@ -140,7 +140,7 @@ It would be something like
 ~~~
 /Users/<username>/Library/Android/sdk/platform-tools/
 ~~~
-you can add the command temporarily set this on the PATH and this try to install apk again.
+you can set this on the PATH temporarily like below and this try to install the apk again.
 ~~~
 export PATH=/Users/<username>/Library/Android/sdk/platform-tools/:$PATH
 ~~~
