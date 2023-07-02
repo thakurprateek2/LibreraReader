@@ -1709,17 +1709,16 @@ public class DragingDialogs {
 
                                     TextView aiInsightsTextView = view.findViewById(R.id.AIInsightsResults);
                                     View progressView = view.findViewById(R.id.progressBarSearch);
-                                    progressView.setVisibility(View.VISIBLE);
 
 //                                    aiInsightsTextView.setText(DummyConstants.LOREM_IPSUM);
 //
 //                                    aiInsightsTextView.setVisibility(View.VISIBLE);
-                                    view.findViewById(R.id.AIInsightsResultsScrollView).setVisibility(View.VISIBLE);
 
                                     FetchInsightsTask fetchInsightsTask = new FetchInsightsTask();
                                     fetchInsightsTask.setOnGetRequestListener(new FetchInsightsTask.OnGetRequestListener() {
                                         @Override
                                         public void onGetRequestCompleted(String response) {
+                                            view.findViewById(R.id.AIInsightsResultsScrollView).setVisibility(View.VISIBLE);
                                             aiInsightsTextView.setText(response);
 
                                             aiInsightsTextView.setVisibility(View.VISIBLE);
@@ -1727,7 +1726,14 @@ public class DragingDialogs {
                                             progressView.setVisibility(View.INVISIBLE);
                                         }
                                     });
-                                    fetchInsightsTask.execute(selectedText);
+
+                                    view.findViewById(R.id.onFetchInsights).setOnClickListener(new OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            progressView.setVisibility(View.VISIBLE);
+                                            fetchInsightsTask.execute(selectedText);
+                                        }
+                                    });
 
                                     return view;
                                 }

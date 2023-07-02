@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
@@ -53,9 +54,35 @@
       
         android:visibility="gone" />
 
+    <LinearLayout
+        android:id="@+id/onFetchInsights"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/wh_button_small"
+            android:layout_height="@dimen/wh_button_small"
+            android:background="@android:drawable/list_selector_background"
+            android:src="@drawable/glyphicons_28_search"
+            app:tint="@color/tint_gray" />
+
+        <TextView
+
+            style="@style/textLink"
+            android:layout_width="match_parent"
+            android:layout_height="35dip"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dip"
+            android:singleLine="true"
+            android:text="What has happened unit now?"
+            android:textSize="15sp" />
+    </LinearLayout>
+
     <com.foobnix.pdf.info.view.MyProgressBar
-                android:saveEnabled="false"
-        
+        android:saveEnabled="false"
+
         android:id="@+id/progressBarSearch"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
