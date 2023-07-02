@@ -178,6 +178,9 @@ MuPDF - (AGPL License) https://mupdf.com/downloads/archive/
 
 Librera is distributed under the GPL
 
+## TODO
+1. Create translations for newly added strings where translatable is set as false
+
 ## License
 
 See the [LICENSE](LICENSE.txt) file for license rights and limitations (GPL v.3).

@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,7 +21,6 @@ import com.foobnix.android.utils.Keyboards;
 import com.foobnix.android.utils.LOG;
 import com.foobnix.android.utils.TxtUtils;
 import com.foobnix.model.AppProfile;
-import com.foobnix.model.AppState;
 import com.foobnix.pdf.info.R;
 import com.foobnix.pdf.info.TintUtil;
 import com.foobnix.pdf.info.widget.DraggbleTouchListener;
@@ -123,15 +123,7 @@ public abstract class DragingPopup {
         Apps.accessibilityText(anchor.getContext(), anchor.getContext().getString(R.string.dialog_is_open), title);
 
         this.anchor = anchor;
-        if (Dips.isXLargeScreen()) {
-            width = (int) (width * 1.5);
-            heigth = (int) (heigth * 1.5);
-        }
-        if (Dips.screenWidth() > Dips.screenHeight()) {
-            width = (int) (width * 1.25);
-        }
-        this.width = width;
-        this.heigth = Math.min(Dips.dpToPx(heigth), Dips.screenHeight() - Dips.dpToPx(40));
+        adjustWidthAndHeight(width, heigth);
 
         inflater = LayoutInflater.from(anchor.getContext());
 
@@ -168,6 +160,40 @@ public abstract class DragingPopup {
                 postAction();
             }
         });
+    }
+
+    private void adjustWidthAndHeight(int width, int heigth) {
+        adjustWidth(width);
+        adjustHeight(heigth);
+    }
+
+    private void adjustHeight(int heigth) {
+        if(checkForPredefinedValues(heigth)) {
+            this.heigth = heigth;
+            return;
+        }
+        if (Dips.isXLargeScreen()) {
+            heigth = (int) (heigth * 1.5);
+        }
+        this.heigth = Math.min(Dips.dpToPx(heigth), Dips.screenHeight() - Dips.dpToPx(40));
+    }
+
+    private void adjustWidth(int width) {
+        if(checkForPredefinedValues(width)) {
+            this.width = width;
+            return;
+        }
+        if (Dips.isXLargeScreen()) {
+            width = (int) (width * 1.5);
+        }
+        if (Dips.screenWidth() > Dips.screenHeight()) {
+            width = (int) (width * 1.25);
+        }
+        this.width = width;
+    }
+
+    private static boolean checkForPredefinedValues(int dimension) {
+        return dimension == ViewGroup.LayoutParams.MATCH_PARENT || dimension == ViewGroup.LayoutParams.WRAP_CONTENT;
     }
 
     public void postAction() {

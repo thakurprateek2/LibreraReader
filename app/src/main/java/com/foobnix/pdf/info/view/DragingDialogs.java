@@ -1687,6 +1687,58 @@ public class DragingDialogs {
                     });
                 }
 
+                View onGetAIInsights = view.findViewById(R.id.onGetAIInsights);
+                // onBookSearch.setText(controller.getString(R.string.search_in_the_book)
+                // + " \"" + AppState.get().selectedText + "\"");
+                if (onGetAIInsights != null) {
+
+                    onGetAIInsights.setVisibility(selectedText != null && selectedText.contains(" ") ? View.GONE : View.VISIBLE);
+                    onGetAIInsights.setOnClickListener(new OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(controller.getActivity(), "AI insights selected", Toast.LENGTH_LONG).show();
+                            DragingPopup dragingPopup = new DragingPopup(R.string.ai_insights_title, anchor, PREF_WIDTH, PREF_HEIGHT) {
+
+                                @Override
+                                public View getContentView(LayoutInflater inflater) {
+                                    final View view = inflater.inflate(R.layout.search_dialog, null, false);
+
+                                    EditText selectedTextEditText = view.findViewById(R.id.edit1);
+                                    selectedTextEditText.setText(selectedText);
+
+                                    TextView aiInsightsTextView = view.findViewById(R.id.AIInsightsResults);
+                                    View progressView = view.findViewById(R.id.progressBarSearch);
+                                    progressView.setVisibility(View.VISIBLE);
+
+//                                    aiInsightsTextView.setText(DummyConstants.LOREM_IPSUM);
+//
+//                                    aiInsightsTextView.setVisibility(View.VISIBLE);
+                                    view.findViewById(R.id.AIInsightsResultsScrollView).setVisibility(View.VISIBLE);
+
+                                    FetchInsightsTask fetchInsightsTask = new FetchInsightsTask();
+                                    fetchInsightsTask.setOnGetRequestListener(new FetchInsightsTask.OnGetRequestListener() {
+                                        @Override
+                                        public void onGetRequestCompleted(String response) {
+                                            aiInsightsTextView.setText(response);
+
+                                            aiInsightsTextView.setVisibility(View.VISIBLE);
+                                            view.findViewById(R.id.AIInsightsResultsScrollView).setVisibility(View.VISIBLE);
+                                            progressView.setVisibility(View.INVISIBLE);
+                                        }
+                                    });
+                                    fetchInsightsTask.execute(selectedText);
+
+                                    return view;
+                                }
+                            };
+                            dragingPopup.show("Search Menu");
+//                            controller.clearSelectedText();
+//                            searchMenu(anchor, controller, selectedText);
+                        }
+                    });
+                }
+
                 LinearLayout dictLayout = view.findViewById(R.id.dictionaryLine);
                 dictLayout.removeAllViews();
 
